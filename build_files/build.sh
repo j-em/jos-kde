@@ -25,6 +25,6 @@ dnf5 install -y tmux kitty zerotier-one wine
 
 #### Example for enabling a System Unit File
 
-rm -rf /var/lib/dnf/repos /var/lib/zerotier-one/*
+rm -rf /var/lib/dnf /var/lib/zerotier-one
 
 systemctl enable podman.socket
