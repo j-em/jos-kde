@@ -14,7 +14,7 @@ dnf5 -y install \
   https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-"$(rpm -E %fedora)".noarch.rpm
 
 # this installs a package from fedora repos
-dnf5 install -y tmux kitty zerotier-one
+dnf5 install -y tmux kitty zerotier-one wine
 
 # Use a COPR Example:
 #
@@ -24,5 +24,7 @@ dnf5 install -y tmux kitty zerotier-one
 # dnf5 -y copr disable ublue-os/staging
 
 #### Example for enabling a System Unit File
+
+rm -rf /var/lib/dnf/repos /var/lib/zerotier-one/*
 
 systemctl enable podman.socket
