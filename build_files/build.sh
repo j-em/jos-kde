@@ -17,7 +17,7 @@ dnf5 -y install \
   https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-"$(rpm -E %fedora)".noarch.rpm
 
 # this installs a package from fedora repos
-dnf5 install -y tmux kitty zerotier-one wine konsole
+dnf5 install -y tmux kitty konsole
 
 dnf5 install -y code-insiders
 
