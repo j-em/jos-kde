@@ -21,6 +21,8 @@ dnf5 install -y tmux kitty konsole
 
 dnf5 install -y code-insiders
 
+dnf5 install -y rocminfo
+
 # Use a COPR Example:
 #
 # dnf5 -y copr enable ublue-os/staging
