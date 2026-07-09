@@ -35,5 +35,3 @@ dnf5 install -y rocminfo
 #### Example for enabling a System Unit File
 
 rm -rf /var/lib/dnf /var/lib/zerotier-one
-
-systemctl enable podman.socket
