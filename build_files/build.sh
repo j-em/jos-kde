@@ -33,5 +33,3 @@ dnf5 install -y rocminfo
 # dnf5 -y copr disable ublue-os/staging
 
 #### Example for enabling a System Unit File
-
-rm -rf /var/lib/dnf /var/lib/zerotier-one
