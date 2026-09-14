@@ -18,8 +18,9 @@ dnf5 -y install \
 
 dnf5 -y install --nogpgcheck --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' terra-release terra-gpg-keys
 
-# this installs a package from fedora repos
-dnf5 install -y tmux kitty zed
+# Install packages from Fedora/Terra and the official ChatGPT desktop RPM.
+CHATGPT_RPM_URL="https://persistent.oaistatic.com/codex-app-prod/linux/rpm/latest/chatgpt.x86_64.rpm"
+dnf5 install -y tmux kitty zed "$CHATGPT_RPM_URL"
 
 dnf5 install -y code-insiders
 
