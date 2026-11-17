@@ -9,11 +9,19 @@ set -ouex pipefail
 rpm --import https://packages.microsoft.com/keys/microsoft.asc &&
   echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\nautorefresh=1\ntype=rpm-md\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" | sudo tee /etc/yum.repos.d/vscode.repo >/dev/null
 
-dnf5 -y install --nogpgcheck --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' terra-release terra-gpg-keys
+# Terra ships in the base image (/usr/share/dnf5/repos.d/terra.repo, disabled by
+# default). Only add it via --repofrompath on older bases that lack it: dnf5 aborts
+# with 'Failed to create repo "terra": Id is present more than once in the
+# configuration' if the repo id is already defined.
+if [[ ! -e /usr/share/dnf5/repos.d/terra.repo && ! -e /etc/yum.repos.d/terra.repo ]]; then
+  # shellcheck disable=SC2016 # $releasever is expanded by dnf, not by the shell
+  dnf5 -y install --nogpgcheck --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' terra-release terra-gpg-keys
+fi
 
 # Install packages from Fedora/Terra and the official ChatGPT desktop RPM.
+# zed is only available in the terra repo, which is disabled in the base image.
 CHATGPT_RPM_URL="https://persistent.oaistatic.com/codex-app-prod/linux/rpm/latest/chatgpt.x86_64.rpm"
-dnf5 install -y tmux kitty zed "$CHATGPT_RPM_URL"
+dnf5 install -y --enable-repo=terra tmux kitty zed "$CHATGPT_RPM_URL"
 
 # Install a pinned Herdr UI release from the upstream installer's RPM source.
 HERDR_VERSION="20261020.1"
