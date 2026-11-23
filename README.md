@@ -2,6 +2,10 @@
 
 This repository is meant to be a template for building your own custom [bootc](https://github.com/bootc-dev/bootc) image. This template is the recommended way to make customizations to any image published by the Universal Blue Project.
 
+## Herdr GUI
+
+The image includes the official Herdr GUI. `herdr-core` is not bundled; Herdr may offer to install it per user. Update the pinned `HERDR_VERSION` and both architecture checksums in `build_files/build.sh` from the official release manifest, then rebuild the image. GUI updates are delivered through image rebuilds.
+
 # Community
 
 If you have questions about this template after following the instructions, try the following spaces:
