@@ -6,6 +6,10 @@ This repository is meant to be a template for building your own custom [bootc](h
 
 The image includes the official Herdr GUI. `herdr-core` is not bundled; Herdr may offer to install it per user. Update the pinned `HERDR_VERSION` and both architecture checksums in `build_files/build.sh` from the official release manifest, then rebuild the image. GUI updates are delivered through image rebuilds.
 
+## Kitty
+
+The image ships the official Kitty Linux binary instead of Fedora's package. To upgrade, open a pull request updating `KITTY_VERSION` and both SHA-256 digests in `build_files/build.sh` from the [official GitHub release](https://github.com/kovidgoyal/kitty/releases). Build the image, then launch Kitty from KDE and confirm it loads your usual settings before publishing.
+
 # Community
 
 If you have questions about this template after following the instructions, try the following spaces:

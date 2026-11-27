@@ -25,7 +25,30 @@ fi
 # Install packages from Fedora/Terra and the official ChatGPT desktop RPM.
 # zed is only available in the terra repo, which is disabled in the base image.
 CHATGPT_RPM_URL="https://persistent.oaistatic.com/codex-app-prod/linux/rpm/latest/chatgpt.x86_64.rpm"
-dnf5 install -y --enable-repo=terra tmux kitty zed "$CHATGPT_RPM_URL"
+dnf5 install -y --enable-repo=terra tmux zed "$CHATGPT_RPM_URL"
+
+# Install the official Kitty binary release instead of Fedora's package.
+KITTY_VERSION="0.51.1"
+case "$(uname -m)" in
+  x86_64) KITTY_ARCH="x86_64"; KITTY_SHA256="d309be978f017dbdcccae175d281092fefe7c8bc64478fa620581604ab0b53c0" ;;
+  aarch64) KITTY_ARCH="arm64"; KITTY_SHA256="9c3e8e38a5068c511e3a94e065cbd2c5af4922d76d2d205d5084018e8572648d" ;;
+  *) echo "Unsupported Kitty architecture: $(uname -m)" >&2; exit 1 ;;
+esac
+KITTY_TMP_DIR="$(mktemp -d)"
+trap 'rm -rf "$KITTY_TMP_DIR"' EXIT
+curl -fsSL --proto '=https' -o "$KITTY_TMP_DIR/kitty.txz" "https://github.com/kovidgoyal/kitty/releases/download/v$KITTY_VERSION/kitty-$KITTY_VERSION-$KITTY_ARCH.txz"
+echo "$KITTY_SHA256  $KITTY_TMP_DIR/kitty.txz" | sha256sum -c -
+mkdir -p /usr/lib/kitty /usr/share/applications /usr/share/icons/hicolor/256x256/apps
+tar -xJf "$KITTY_TMP_DIR/kitty.txz" -C /usr/lib/kitty
+ln -s /usr/lib/kitty/bin/{kitty,kitten} /usr/bin/
+install -m 644 /usr/lib/kitty/share/applications/kitty{,-open}.desktop /usr/share/applications/
+install -m 644 /usr/lib/kitty/share/icons/hicolor/256x256/apps/kitty.png /usr/share/icons/hicolor/256x256/apps/
+if [[ "$(/usr/bin/kitty --version) " != "kitty $KITTY_VERSION "* ]]; then
+  echo "Expected Kitty $KITTY_VERSION" >&2
+  exit 1
+fi
+rm -rf "$KITTY_TMP_DIR"
+trap - EXIT
 
 # Install the official Herdr GUI (not herdr-core).
 HERDR_VERSION="0.1.16"
