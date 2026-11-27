@@ -81,8 +81,6 @@ EOF
 rm -rf "$HERDR_TMP_DIR"
 trap - EXIT
 
-dnf5 install -y code-insiders
-
 dnf5 install -y rocminfo
 
 dnf5 install -y libglvnd-devel mesa-libGL-devel
