@@ -51,11 +51,11 @@ rm -rf "$KITTY_TMP_DIR"
 trap - EXIT
 
 # Install the official Herdr GUI (not herdr-core).
-HERDR_VERSION="0.1.16"
+HERDR_VERSION="0.1.18"
 HERDR_ARCH="$(uname -m)"
 case "$HERDR_ARCH" in
-  x86_64) HERDR_SHA256="282d2632196b238206cfe66bfb61c0faf299ca1c91843bd076521bbe36571216" ;;
-  aarch64) HERDR_SHA256="efeef4f1759b0e8900f205c2c22b14287a112f874406539b4ea1b3be24b73631" ;;
+  x86_64) HERDR_SHA256="8a11edd79dd40b349f7286cf51910b62e21136daf8f03005a9fd2c4dc5830f83" ;;
+  aarch64) HERDR_SHA256="3bf51505cb1e7d61e63ccdc2655e8819f4b452babead9922fe4bb6fe69e91350" ;;
   *) echo "Unsupported Herdr GUI architecture: $HERDR_ARCH" >&2; exit 1 ;;
 esac
 HERDR_TMP_DIR="$(mktemp -d)"
